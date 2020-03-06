@@ -22,12 +22,17 @@ const mutations = {
 
 const actions = {
   async nuxtClientInit ({ commit }) {
-    console.log('nuxtClientInit');
-    let {data} = await axios.get(uri.principal)
-    console.log('user1', data)
-    if(data){
-      console.log('user2', data.customer)
-      commit('SET_USER', data.customer)
+    try{
+      console.log('nuxtClientInit');
+      let {data} = await axios.get(uri.principal)
+      if(data){
+        commit('SET_USER', data.customer)
+        console.log('user1', data)
+      }
+    }catch(e){
+      console.error(e)
+    }finally{
+    
     }
   },
   

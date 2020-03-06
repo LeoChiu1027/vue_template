@@ -17,7 +17,7 @@ const Menu = [
   {
     title: 'VIP',
     group: 'apps',
-    icon: 'mdi-account-cowboy-hat',
+    icon: 'mdi-cash-multiple',
     name: 'member',
     href: '/home/vip'
   },  

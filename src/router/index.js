@@ -6,6 +6,7 @@ import routes from '@/router/routes'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
+    base: '/',
     routes: routes.defaultRoutes,
     mode: 'history'
 })
@@ -13,10 +14,10 @@ const router = new VueRouter({
 router.onReady(() => {
     if(store.state.authUser){
         console.log('router.onReady', store.state.authUser)
-        if(store.state.authUser.id === '03077208'){
+        if(store.state.authUser.role === 'V'){
             router.addRoutes(routes.vipRoutes)
             router.options.routes.push(routes.vipRoutes)
-          }else{
+        }else{
             router.addRoutes(routes.memberRoutes)
             router.options.routes.push(routes.memberRoutes)
         }
@@ -27,8 +28,6 @@ router.onReady(() => {
 
 async function setAuthUser(){
     await store.dispatch('nuxtClientInit')
-
-
 }
 // Creates a `nextMiddleware()` function which not only
 // runs the default `next()` callback but also triggers

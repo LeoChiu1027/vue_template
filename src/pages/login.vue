@@ -58,15 +58,16 @@ export default {
   }),
   methods: {
     async login () {
-      this.$router.push('/home');
       try {
         const data = await this.$store.dispatch('login', {
           username: this.model.username,
           password: this.model.password
         })
-        console.log('data', this.$store.state.authUser);
+        
         if(this.$store.state.authUser){
-          this.$router.push('/home');
+          console.log('login success push home', this.$store.state.authUser);
+          //this.$router.push({ path: '/home' }).catch(err => {});
+          window.location.href = '/home'
         }
       } catch (e) {
         this.formError = e.message
@@ -74,7 +75,7 @@ export default {
     },
     async logout () {
       try {
-        await this.$store.dispatch('logout')
+        await this.$store.dispatch('/logout')
       } catch (e) {
         this.formError = e.message
       }
