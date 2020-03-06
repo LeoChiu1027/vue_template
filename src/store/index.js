@@ -1,0 +1,62 @@
+import Vue from 'vue'
+import Vuex from 'vuex';
+import uri from "@/api/uri"
+import axios from "@/util/axios"
+
+const state = () => ({
+    drawer: true,
+    authUser: null
+})
+
+const mutations = {
+  toggleDrawer(state) {
+    state.drawer = !state.drawer
+  },
+  drawer(state, val) {
+    state.drawer = val
+  },
+  SET_USER (state, user) {
+    state.authUser = user
+  }  
+}
+
+const actions = {
+  async nuxtClientInit ({ commit }) {
+    console.log('nuxtClientInit');
+    let {data} = await axios.get(uri.principal)
+    console.log('user1', data)
+    if(data){
+      console.log('user2', data.customer)
+      commit('SET_USER', data.customer)
+    }
+  },
+  
+  async login ({ commit }, { username, password }) {
+    try {
+      const  res  = await axios.post(uri.login, null, {params: {username: username,password: password}}, {headers: {"Content-Type": "application/json"} })
+      console.log(res.data)
+      commit('SET_USER', res.data.customer)
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        throw new Error('Bad credentials')
+      }
+      throw error
+    }
+  },
+
+  async logout ({ commit }) {
+    await axios.post('/api/logout')
+    commit('SET_USER', null)
+  }  
+}
+
+
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+    state: state,
+    mutations: mutations,
+    actions: actions
+})
+
+export default store;
