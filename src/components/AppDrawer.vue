@@ -94,7 +94,7 @@
           };
         }
         return {name: `${item.group}/${(subItem.name)}`};
-      },
+      }    
     }
   };
 </script>

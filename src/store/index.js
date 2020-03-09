@@ -50,8 +50,12 @@ const actions = {
   },
 
   async logout ({ commit }) {
-    await axios.post('/api/logout')
-    commit('SET_USER', null)
+    try{
+      await axios.post(uri.logout)
+      commit('SET_USER', null)
+    }catch(e){
+      console.error(e)
+    }
   }  
 }
 

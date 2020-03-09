@@ -72,13 +72,6 @@ export default {
       } catch (e) {
         this.formError = e.message
       }
-    },
-    async logout () {
-      try {
-        await this.$store.dispatch('/logout')
-      } catch (e) {
-        this.formError = e.message
-      }
     }
   }
 };

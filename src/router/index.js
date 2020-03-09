@@ -22,12 +22,18 @@ router.onReady(() => {
             router.options.routes.push(routes.memberRoutes)
         }
         console.log('router.options',router.options);
+    }else{
+        router.push('/expire')
     }
   })
 
 
 async function setAuthUser(){
     await store.dispatch('nuxtClientInit')
+}
+
+async function logout(){
+    await store.dispatch('logout')
 }
 // Creates a `nextMiddleware()` function which not only
 // runs the default `next()` callback but also triggers
@@ -49,6 +55,10 @@ function nextFactory(context, middleware, index) {
 }
     
 router.beforeEach(async (to, from, next) => {
+    if(to.path == '/logout'){
+        await logout()
+        return next()
+    }
     await setAuthUser()
     if (to.meta.middleware) {
     const middleware = Array.isArray(to.meta.middleware)

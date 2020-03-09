@@ -4,12 +4,12 @@ import Member from '@/pages/member'
 import Vip from '@/pages/vip'
 import PageNotFound from '@/pages/pageNotFound'
 import AuthExpire from '@/pages/authExpire'
+import Logout from '@/pages/logout'
 import auth from '@/middleware/auth'
 import log from '@/middleware/log'
 
 
-const defaultRoutes = [
-        
+const defaultRoutes = [   
     {
         path: '/',
         redirect: {
@@ -33,6 +33,12 @@ const defaultRoutes = [
         path: '/expire',
         name: 'expire',
         component: AuthExpire,
+        meta: { middleware: log } 
+    },
+    {
+        path: '/logout',
+        name: 'logout',
+        component: Logout,
         meta: { middleware: log } 
     }
 ]
@@ -74,16 +80,8 @@ const vipRoutes = [{
     } 
 ]
 
-const excludeAuthPaths = [
-    '/',
-    '/404',
-    '/login',
-    '/expire'
-]
-
 export default {
     defaultRoutes,
     memberRoutes,
-    vipRoutes,
-    excludeAuthPaths
+    vipRoutes
 }
