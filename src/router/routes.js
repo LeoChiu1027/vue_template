@@ -11,6 +11,12 @@ import log from '@/middleware/log'
 
 const defaultRoutes = [   
     {
+        path: '/home',
+        name: 'home',
+        component: Home,
+        meta: { middleware: [auth, log] },
+    },    
+    {
         path: '/',
         redirect: {
             name: 'login'
@@ -80,8 +86,10 @@ const vipRoutes = [{
     } 
 ]
 
-export default {
-    defaultRoutes,
-    memberRoutes,
-    vipRoutes
+const routes = {
+    default: defaultRoutes, 
+    V: vipRoutes, 
+    M: memberRoutes
 }
+
+export default routes

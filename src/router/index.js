@@ -5,25 +5,20 @@ import routes from '@/router/routes'
 
 Vue.use(VueRouter)
 
-const router = new VueRouter({
+const createRouter = () => new VueRouter({
     base: '/',
-    routes: routes.defaultRoutes,
+    routes: routes['default'],
     mode: 'history'
 })
 
+const router = createRouter()
+
 router.onReady(() => {
+    console.log('router.onReady', store.state.authUser)
     if(store.state.authUser){
-        console.log('router.onReady', store.state.authUser)
-        if(store.state.authUser.role === 'V'){
-            router.addRoutes(routes.vipRoutes)
-            router.options.routes.push(routes.vipRoutes)
-        }else{
-            router.addRoutes(routes.memberRoutes)
-            router.options.routes.push(routes.memberRoutes)
-        }
-        console.log('router.options',router.options);
-    }else{
-        router.push('/expire')
+        const authorizedRoutes = routes[store.state.authUser.role]
+        router.addRoutes(authorizedRoutes)
+        router.options.routes.push(authorizedRoutes)
     }
   })
 
@@ -60,6 +55,7 @@ router.beforeEach(async (to, from, next) => {
         return next()
     }
     await setAuthUser()
+
     if (to.meta.middleware) {
     const middleware = Array.isArray(to.meta.middleware)
         ? to.meta.middleware

@@ -29,6 +29,7 @@
             v-for="subItem in item.items"
             :key="subItem.title"
             :to="subItem.href? subItem.href : null"
+            exact
           >
             <v-list-item-content>
               <v-list-item-title v-text="subItem.title"></v-list-item-title>
@@ -36,7 +37,7 @@
           </v-list-item>
         </v-list-group>
 
-        <v-list-item v-else :to="item.href ? item.href : null" :key="item.title">
+        <v-list-item v-else :to="item.href ? item.href : null" :key="item.title" exact>
           <v-list-item-icon>
             <v-icon>{{item.icon}}</v-icon>
           </v-list-item-icon>
