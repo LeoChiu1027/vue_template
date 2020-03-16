@@ -17,8 +17,14 @@ router.onReady(() => {
     console.log('router.onReady', store.state.authUser)
     if(store.state.authUser){
         const authorizedRoutes = routes[store.state.authUser.role]
-        router.addRoutes(authorizedRoutes)
-        router.options.routes.push(authorizedRoutes)
+        router.matcher = new VueRouter({
+            base: '/',
+            routes: authorizedRoutes,
+            mode: 'history'
+        }).matcher
+
+        // router.addRoutes(authorizedRoutes)
+        // router.options.routes.push(authorizedRoutes)
     }
   })
 

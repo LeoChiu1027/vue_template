@@ -61,7 +61,21 @@ const memberRoutes = [{
     },
     {
         path: '*', 
-        redirect: '/404'
+        redirect: '/404',
+        meta: { middleware: log } 
+    },
+    {
+        path: '/404',
+        name: '404',
+        component: PageNotFound,
+        meta: { middleware: log } 
+        
+    },
+    {
+        path: '/logout',
+        name: 'logout',
+        component: Logout,
+        meta: { middleware: log } 
     }    
 ]
 
@@ -83,7 +97,20 @@ const vipRoutes = [{
     {
         path: '*', 
         redirect: '/404'
-    } 
+    },
+    {
+        path: '/404',
+        name: '404',
+        component: PageNotFound,
+        meta: { middleware: log } 
+        
+    },
+    {
+        path: '/logout',
+        name: 'logout',
+        component: Logout,
+        meta: { middleware: log } 
+    }         
 ]
 
 const routes = {
